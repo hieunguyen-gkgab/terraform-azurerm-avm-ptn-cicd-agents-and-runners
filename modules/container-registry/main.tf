@@ -1,20 +1,21 @@
 module "container_registry" {
-  source                        = "Azure/avm-res-containerregistry-registry/azurerm"
-  version                       = "0.4.0"
-  name                          = var.name
-  resource_group_name           = var.resource_group_name
-  location                      = var.location
-  public_network_access_enabled = !var.use_private_networking
-  zone_redundancy_enabled       = var.use_private_networking
-  network_rule_bypass_option    = var.use_private_networking ? "AzureServices" : "None"
-  enable_telemetry              = var.enable_telemetry
+  source  = "Azure/avm-res-containerregistry-registry/azurerm"
+  version = "0.4.0"
+
+  location                   = var.location
+  name                       = var.name
+  resource_group_name        = var.resource_group_name
+  enable_telemetry           = var.enable_telemetry
+  network_rule_bypass_option = var.use_private_networking ? "AzureServices" : "None"
   private_endpoints = var.use_private_networking ? {
     container_registry = {
       private_dns_zone_resource_ids = var.private_dns_zone_id == null || var.private_dns_zone_id == "" ? [] : [var.private_dns_zone_id]
       subnet_resource_id            = var.subnet_id
     }
   } : null
-  tags = var.tags
+  public_network_access_enabled = !var.use_private_networking
+  tags                          = var.tags
+  zone_redundancy_enabled       = var.use_private_networking
 }
 
 resource "azurerm_container_registry_task" "this" {
