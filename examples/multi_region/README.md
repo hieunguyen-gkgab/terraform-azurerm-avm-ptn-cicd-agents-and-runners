@@ -1,9 +1,10 @@
 <!-- BEGIN_TF_DOCS -->
+
 # Azure DevOps example with private networking and multi-region
 
 This example deploys Azure DevOps Agents to Azure Container Apps using the minimal set of required variables using private networking and multi-region support.
 
->NOTE: Multi-region support may result in duplicated agent scaling, there is no built-in mechanism to prevent this.
+> NOTE: Multi-region support may result in duplicated agent scaling, there is no built-in mechanism to prevent this.
 
 ```hcl
 
@@ -144,10 +145,10 @@ data "azurerm_client_config" "this" {}
 resource "azapi_resource_action" "resource_provider_registration" {
   for_each = local.resource_providers_to_register
 
-  resource_id = "/subscriptions/${data.azurerm_client_config.this.subscription_id}"
-  type        = "Microsoft.Resources/subscriptions@2021-04-01"
   action      = "providers/${each.value.resource_provider}/register"
   method      = "POST"
+  resource_id = "/subscriptions/${data.azurerm_client_config.this.subscription_id}"
+  type        = "Microsoft.Resources/subscriptions@2021-04-01"
 }
 
 # This is the module call
@@ -224,19 +225,20 @@ locals {
 ```
 
 <!-- markdownlint-disable MD033 -->
+
 ## Requirements
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9)
+- <a name="requirement_terraform"></a> [terraform](#requirement_terraform) (>= 1.9)
 
-- <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) (~> 2.0)
+- <a name="requirement_azapi"></a> [azapi](#requirement_azapi) (~> 2.0)
 
-- <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) (~> 1.1)
+- <a name="requirement_azuredevops"></a> [azuredevops](#requirement_azuredevops) (~> 1.1)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.20)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement_azurerm) (~> 4.20)
 
-- <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
+- <a name="requirement_random"></a> [random](#requirement_random) (~> 3.5)
 
 ## Resources
 
@@ -256,23 +258,24 @@ The following resources are used by this module:
 - [azurerm_client_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 
 <!-- markdownlint-disable MD013 -->
+
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_azure_devops_agents_personal_access_token"></a> [azure\_devops\_agents\_personal\_access\_token](#input\_azure\_devops\_agents\_personal\_access\_token)
+### <a name="input_azure_devops_agents_personal_access_token"></a> [azure_devops_agents_personal_access_token](#input_azure_devops_agents_personal_access_token)
 
 Description: Personal access token for Azure DevOps self-hosted agents (the token requires the 'Agent Pools - Read & Manage' scope and should have the maximum expiry).
 
 Type: `string`
 
-### <a name="input_azure_devops_organization_name"></a> [azure\_devops\_organization\_name](#input\_azure\_devops\_organization\_name)
+### <a name="input_azure_devops_organization_name"></a> [azure_devops_organization_name](#input_azure_devops_organization_name)
 
 Description: Azure DevOps Organisation Name
 
 Type: `string`
 
-### <a name="input_azure_devops_personal_access_token"></a> [azure\_devops\_personal\_access\_token](#input\_azure\_devops\_personal\_access\_token)
+### <a name="input_azure_devops_personal_access_token"></a> [azure_devops_personal_access_token](#input_azure_devops_personal_access_token)
 
 Description: The personal access token used for agent authentication to Azure DevOps.
 
@@ -286,43 +289,43 @@ No optional inputs.
 
 The following outputs are exported:
 
-### <a name="output_container_app_environment_primary_name"></a> [container\_app\_environment\_primary\_name](#output\_container\_app\_environment\_primary\_name)
+### <a name="output_container_app_environment_primary_name"></a> [container_app_environment_primary_name](#output_container_app_environment_primary_name)
 
 Description: n/a
 
-### <a name="output_container_app_environment_primary_resource_id"></a> [container\_app\_environment\_primary\_resource\_id](#output\_container\_app\_environment\_primary\_resource\_id)
+### <a name="output_container_app_environment_primary_resource_id"></a> [container_app_environment_primary_resource_id](#output_container_app_environment_primary_resource_id)
 
 Description: n/a
 
-### <a name="output_container_app_environment_secondary_name"></a> [container\_app\_environment\_secondary\_name](#output\_container\_app\_environment\_secondary\_name)
+### <a name="output_container_app_environment_secondary_name"></a> [container_app_environment_secondary_name](#output_container_app_environment_secondary_name)
 
 Description: n/a
 
-### <a name="output_container_app_environment_secondary_resource_id"></a> [container\_app\_environment\_secondary\_resource\_id](#output\_container\_app\_environment\_secondary\_resource\_id)
+### <a name="output_container_app_environment_secondary_resource_id"></a> [container_app_environment_secondary_resource_id](#output_container_app_environment_secondary_resource_id)
 
 Description: n/a
 
-### <a name="output_container_app_job_primary_name"></a> [container\_app\_job\_primary\_name](#output\_container\_app\_job\_primary\_name)
+### <a name="output_container_app_job_primary_name"></a> [container_app_job_primary_name](#output_container_app_job_primary_name)
 
 Description: n/a
 
-### <a name="output_container_app_job_primary_resource_id"></a> [container\_app\_job\_primary\_resource\_id](#output\_container\_app\_job\_primary\_resource\_id)
+### <a name="output_container_app_job_primary_resource_id"></a> [container_app_job_primary_resource_id](#output_container_app_job_primary_resource_id)
 
 Description: n/a
 
-### <a name="output_container_app_job_secondary_name"></a> [container\_app\_job\_secondary\_name](#output\_container\_app\_job\_secondary\_name)
+### <a name="output_container_app_job_secondary_name"></a> [container_app_job_secondary_name](#output_container_app_job_secondary_name)
 
 Description: n/a
 
-### <a name="output_container_app_job_secondary_resource_id"></a> [container\_app\_job\_secondary\_resource\_id](#output\_container\_app\_job\_secondary\_resource\_id)
+### <a name="output_container_app_job_secondary_resource_id"></a> [container_app_job_secondary_resource_id](#output_container_app_job_secondary_resource_id)
 
 Description: n/a
 
-### <a name="output_primary_region"></a> [primary\_region](#output\_primary\_region)
+### <a name="output_primary_region"></a> [primary_region](#output_primary_region)
 
 Description: n/a
 
-### <a name="output_secondary_region"></a> [secondary\_region](#output\_secondary\_region)
+### <a name="output_secondary_region"></a> [secondary_region](#output_secondary_region)
 
 Description: n/a
 
@@ -330,32 +333,34 @@ Description: n/a
 
 The following Modules are called:
 
-### <a name="module_azure_devops_agents_primary"></a> [azure\_devops\_agents\_primary](#module\_azure\_devops\_agents\_primary)
+### <a name="module_azure_devops_agents_primary"></a> [azure_devops_agents_primary](#module_azure_devops_agents_primary)
 
 Source: ../..
 
 Version:
 
-### <a name="module_azure_devops_agents_secondary"></a> [azure\_devops\_agents\_secondary](#module\_azure\_devops\_agents\_secondary)
+### <a name="module_azure_devops_agents_secondary"></a> [azure_devops_agents_secondary](#module_azure_devops_agents_secondary)
 
 Source: ../..
 
 Version:
 
-### <a name="module_naming"></a> [naming](#module\_naming)
+### <a name="module_naming"></a> [naming](#module_naming)
 
 Source: Azure/naming/azurerm
 
 Version: >= 0.3.0
 
-### <a name="module_regions"></a> [regions](#module\_regions)
+### <a name="module_regions"></a> [regions](#module_regions)
 
 Source: Azure/avm-utl-regions/azurerm
 
 Version: 0.3.0
 
 <!-- markdownlint-disable-next-line MD041 -->
+
 ## Data Collection
 
 The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement. Our privacy statement is located at <https://go.microsoft.com/fwlink/?LinkID=824704>. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
+
 <!-- END_TF_DOCS -->

@@ -1,4 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
+
 # GitHub minimal example with a container instance and private networking
 
 This example deploys GitHub Runners to Azure Container Instance using the minimal set of required variables using private networking.
@@ -124,17 +125,18 @@ locals {
 ```
 
 <!-- markdownlint-disable MD033 -->
+
 ## Requirements
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9)
+- <a name="requirement_terraform"></a> [terraform](#requirement_terraform) (>= 1.9)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.20)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement_azurerm) (~> 4.20)
 
-- <a name="requirement_github"></a> [github](#requirement\_github) (~> 5.36)
+- <a name="requirement_github"></a> [github](#requirement_github) (~> 5.36)
 
-- <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
+- <a name="requirement_random"></a> [random](#requirement_random) (~> 3.5)
 
 ## Resources
 
@@ -147,23 +149,24 @@ The following resources are used by this module:
 - [github_organization.alz](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/organization) (data source)
 
 <!-- markdownlint-disable MD013 -->
+
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_github_organization_name"></a> [github\_organization\_name](#input\_github\_organization\_name)
+### <a name="input_github_organization_name"></a> [github_organization_name](#input_github_organization_name)
 
 Description: GitHub Organisation Name
 
 Type: `string`
 
-### <a name="input_github_personal_access_token"></a> [github\_personal\_access\_token](#input\_github\_personal\_access\_token)
+### <a name="input_github_personal_access_token"></a> [github_personal_access_token](#input_github_personal_access_token)
 
 Description: The personal access token used for authentication to GitHub.
 
 Type: `string`
 
-### <a name="input_github_runners_personal_access_token"></a> [github\_runners\_personal\_access\_token](#input\_github\_runners\_personal\_access\_token)
+### <a name="input_github_runners_personal_access_token"></a> [github_runners_personal_access_token](#input_github_runners_personal_access_token)
 
 Description: Personal access token for GitHub self-hosted runners (the token requires the 'repo' scope and should not expire).
 
@@ -181,26 +184,28 @@ No outputs.
 
 The following Modules are called:
 
-### <a name="module_github_runners"></a> [github\_runners](#module\_github\_runners)
+### <a name="module_github_runners"></a> [github_runners](#module_github_runners)
 
 Source: ../..
 
 Version:
 
-### <a name="module_naming"></a> [naming](#module\_naming)
+### <a name="module_naming"></a> [naming](#module_naming)
 
 Source: Azure/naming/azurerm
 
 Version: >= 0.3.0
 
-### <a name="module_regions"></a> [regions](#module\_regions)
+### <a name="module_regions"></a> [regions](#module_regions)
 
 Source: Azure/avm-utl-regions/azurerm
 
 Version: 0.3.0
 
 <!-- markdownlint-disable-next-line MD041 -->
+
 ## Data Collection
 
 The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement. Our privacy statement is located at <https://go.microsoft.com/fwlink/?LinkID=824704>. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
+
 <!-- END_TF_DOCS -->

@@ -1,9 +1,11 @@
 <!-- BEGIN_TF_DOCS -->
+
 # GitHub minimal example with private networking
 
 This example deploys GitHub Runners to Azure Container Apps using the minimal set of required variables using private networking.
 
 ```hcl
+
 
 
 
@@ -104,10 +106,10 @@ data "azurerm_client_config" "this" {}
 resource "azapi_resource_action" "resource_provider_registration" {
   for_each = local.resource_providers_to_register
 
-  resource_id = "/subscriptions/${data.azurerm_client_config.this.subscription_id}"
-  type        = "Microsoft.Resources/subscriptions@2021-04-01"
   action      = "providers/${each.value.resource_provider}/register"
   method      = "POST"
+  resource_id = "/subscriptions/${data.azurerm_client_config.this.subscription_id}"
+  type        = "Microsoft.Resources/subscriptions@2021-04-01"
 }
 
 # This is the module call
@@ -153,19 +155,20 @@ locals {
 ```
 
 <!-- markdownlint-disable MD033 -->
+
 ## Requirements
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9)
+- <a name="requirement_terraform"></a> [terraform](#requirement_terraform) (>= 1.9)
 
-- <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) (~> 2.0)
+- <a name="requirement_azapi"></a> [azapi](#requirement_azapi) (~> 2.0)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.20)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement_azurerm) (~> 4.20)
 
-- <a name="requirement_github"></a> [github](#requirement\_github) (~> 5.36)
+- <a name="requirement_github"></a> [github](#requirement_github) (~> 5.36)
 
-- <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
+- <a name="requirement_random"></a> [random](#requirement_random) (~> 3.5)
 
 ## Resources
 
@@ -180,41 +183,42 @@ The following resources are used by this module:
 - [github_organization.alz](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/organization) (data source)
 
 <!-- markdownlint-disable MD013 -->
+
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_github_application_id"></a> [github\_application\_id](#input\_github\_application\_id)
+### <a name="input_github_application_id"></a> [github_application_id](#input_github_application_id)
 
 Description: The application ID used for the GitHub App authentication method.
 
 Type: `string`
 
-### <a name="input_github_application_key"></a> [github\_application\_key](#input\_github\_application\_key)
+### <a name="input_github_application_key"></a> [github_application_key](#input_github_application_key)
 
-Description: The application key used for the GitHub App authentication method. Import key file as environment variable: $env:TF\_VAR\_github\_application\_key = Get-Content path	o\[private\_key\_name].pem -Raw
+Description: The application key used for the GitHub App authentication method. Import key file as environment variable: $env:TF_VAR_github_application_key = Get-Content path o\[private_key_name].pem -Raw
 
 Type: `string`
 
-### <a name="input_github_installation_id"></a> [github\_installation\_id](#input\_github\_installation\_id)
+### <a name="input_github_installation_id"></a> [github_installation_id](#input_github_installation_id)
 
 Description: The Installation ID used for the GitHub App authentication method.
 
 Type: `string`
 
-### <a name="input_github_organization_name"></a> [github\_organization\_name](#input\_github\_organization\_name)
+### <a name="input_github_organization_name"></a> [github_organization_name](#input_github_organization_name)
 
 Description: GitHub Organisation Name
 
 Type: `string`
 
-### <a name="input_github_personal_access_token"></a> [github\_personal\_access\_token](#input\_github\_personal\_access\_token)
+### <a name="input_github_personal_access_token"></a> [github_personal_access_token](#input_github_personal_access_token)
 
 Description: The personal access token used for authentication to GitHub.
 
 Type: `string`
 
-### <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)
+### <a name="input_subscription_id"></a> [subscription_id](#input_subscription_id)
 
 Description: The subscription ID to use for the deployment.
 
@@ -232,26 +236,28 @@ No outputs.
 
 The following Modules are called:
 
-### <a name="module_github_runners"></a> [github\_runners](#module\_github\_runners)
+### <a name="module_github_runners"></a> [github_runners](#module_github_runners)
 
 Source: ../..
 
 Version:
 
-### <a name="module_naming"></a> [naming](#module\_naming)
+### <a name="module_naming"></a> [naming](#module_naming)
 
 Source: Azure/naming/azurerm
 
 Version: >= 0.3.0
 
-### <a name="module_regions"></a> [regions](#module\_regions)
+### <a name="module_regions"></a> [regions](#module_regions)
 
 Source: Azure/avm-utl-regions/azurerm
 
 Version: 0.3.0
 
 <!-- markdownlint-disable-next-line MD041 -->
+
 ## Data Collection
 
 The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement. Our privacy statement is located at <https://go.microsoft.com/fwlink/?LinkID=824704>. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
+
 <!-- END_TF_DOCS -->

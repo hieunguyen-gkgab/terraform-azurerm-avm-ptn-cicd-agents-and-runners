@@ -1,4 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
+
 # Azure DevOps minimal example with a container instance and private networking
 
 This example deploys Azure DevOps Agents to Azure Container Instance using the minimal set of required variables using private networking.
@@ -163,17 +164,18 @@ locals {
 ```
 
 <!-- markdownlint-disable MD033 -->
+
 ## Requirements
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9)
+- <a name="requirement_terraform"></a> [terraform](#requirement_terraform) (>= 1.9)
 
-- <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) (~> 1.1)
+- <a name="requirement_azuredevops"></a> [azuredevops](#requirement_azuredevops) (~> 1.1)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.20)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement_azurerm) (~> 4.20)
 
-- <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
+- <a name="requirement_random"></a> [random](#requirement_random) (~> 3.5)
 
 ## Resources
 
@@ -190,23 +192,24 @@ The following resources are used by this module:
 - [random_string.name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
 
 <!-- markdownlint-disable MD013 -->
+
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_azure_devops_agents_personal_access_token"></a> [azure\_devops\_agents\_personal\_access\_token](#input\_azure\_devops\_agents\_personal\_access\_token)
+### <a name="input_azure_devops_agents_personal_access_token"></a> [azure_devops_agents_personal_access_token](#input_azure_devops_agents_personal_access_token)
 
 Description: Personal access token for Azure DevOps self-hosted agents (the token requires the 'Agent Pools - Read & Manage' scope and should have the maximum expiry).
 
 Type: `string`
 
-### <a name="input_azure_devops_organization_name"></a> [azure\_devops\_organization\_name](#input\_azure\_devops\_organization\_name)
+### <a name="input_azure_devops_organization_name"></a> [azure_devops_organization_name](#input_azure_devops_organization_name)
 
 Description: Azure DevOps Organisation Name
 
 Type: `string`
 
-### <a name="input_azure_devops_personal_access_token"></a> [azure\_devops\_personal\_access\_token](#input\_azure\_devops\_personal\_access\_token)
+### <a name="input_azure_devops_personal_access_token"></a> [azure_devops_personal_access_token](#input_azure_devops_personal_access_token)
 
 Description: The personal access token used for agent authentication to Azure DevOps.
 
@@ -220,11 +223,11 @@ No optional inputs.
 
 The following outputs are exported:
 
-### <a name="output_container_instance_names"></a> [container\_instance\_names](#output\_container\_instance\_names)
+### <a name="output_container_instance_names"></a> [container_instance_names](#output_container_instance_names)
 
 Description: n/a
 
-### <a name="output_container_instance_resource_ids"></a> [container\_instance\_resource\_ids](#output\_container\_instance\_resource\_ids)
+### <a name="output_container_instance_resource_ids"></a> [container_instance_resource_ids](#output_container_instance_resource_ids)
 
 Description: n/a
 
@@ -232,26 +235,28 @@ Description: n/a
 
 The following Modules are called:
 
-### <a name="module_azure_devops_agents"></a> [azure\_devops\_agents](#module\_azure\_devops\_agents)
+### <a name="module_azure_devops_agents"></a> [azure_devops_agents](#module_azure_devops_agents)
 
 Source: ../..
 
 Version:
 
-### <a name="module_naming"></a> [naming](#module\_naming)
+### <a name="module_naming"></a> [naming](#module_naming)
 
 Source: Azure/naming/azurerm
 
 Version: >= 0.3.0
 
-### <a name="module_regions"></a> [regions](#module\_regions)
+### <a name="module_regions"></a> [regions](#module_regions)
 
 Source: Azure/avm-utl-regions/azurerm
 
 Version: 0.3.0
 
 <!-- markdownlint-disable-next-line MD041 -->
+
 ## Data Collection
 
 The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement. Our privacy statement is located at <https://go.microsoft.com/fwlink/?LinkID=824704>. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
+
 <!-- END_TF_DOCS -->

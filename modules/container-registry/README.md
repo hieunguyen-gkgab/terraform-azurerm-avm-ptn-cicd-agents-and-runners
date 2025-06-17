@@ -1,4 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
+
 # CI/CD Agents and Runners - Container Registry
 
 This submodule deploys an Azure Container Registry and image build tasks for CI/CD agents and runners.
@@ -22,6 +23,17 @@ module "container_registry" {
   public_network_access_enabled = !var.use_private_networking
   tags                          = var.tags
   zone_redundancy_enabled       = var.use_private_networking
+}
+
+resource "azapi_update_resource" "network_rule_bypass_allowed_for_tasks" {
+  count = var.use_private_networking ? 1 : 0
+
+  resource_id = module.container_registry.resource_id
+  type        = "Microsoft.ContainerRegistry/registries@2025-05-01-preview"
+  body = {
+    properties = {
+      networkRuleBypassAllowedForTasks = true
+    }
 }
 
 resource "azurerm_container_registry_task" "this" {
@@ -56,7 +68,10 @@ resource "azurerm_container_registry_task_schedule_run_now" "this" {
 
   container_registry_task_id = azurerm_container_registry_task.this[each.key].id
 
-  depends_on = [azurerm_role_assignment.container_registry_push_for_task]
+  depends_on = [
+    azurerm_role_assignment.container_registry_push_for_task,
+    azapi_update_resource.network_rule_bypass_allowed_for_tasks
+  ]
 
   lifecycle {
     replace_triggered_by = [azurerm_container_registry_task.this]
@@ -79,65 +94,72 @@ resource "azurerm_role_assignment" "container_registry_push_for_task" {
 ```
 
 <!-- markdownlint-disable MD033 -->
+
 ## Requirements
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9)
+- <a name="requirement_terraform"></a> [terraform](#requirement_terraform) (>= 1.9)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.20)
+- <a name="requirement_azapi"></a> [azapi](#requirement_azapi) (~> 2.0)
+
+- <a name="requirement_azurerm"></a> [azurerm](#requirement_azurerm) (~> 4.20)
 
 ## Providers
 
 The following providers are used by this module:
 
-- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 4.20)
+- <a name="provider_azapi"></a> [azapi](#provider_azapi) (~> 2.0)
+
+- <a name="provider_azurerm"></a> [azurerm](#provider_azurerm) (~> 4.20)
 
 ## Resources
 
 The following resources are used by this module:
 
+- [azapi_update_resource.network_rule_bypass_allowed_for_tasks](https://registry.terraform.io/providers/Azure/azapi/latest/docs/resources/update_resource) (resource)
 - [azurerm_container_registry_task.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_task) (resource)
 - [azurerm_container_registry_task_schedule_run_now.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry_task_schedule_run_now) (resource)
 - [azurerm_role_assignment.container_registry_pull_for_container_instance](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
 - [azurerm_role_assignment.container_registry_push_for_task](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
 
 <!-- markdownlint-disable MD013 -->
+
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_container_compute_identity_principal_id"></a> [container\_compute\_identity\_principal\_id](#input\_container\_compute\_identity\_principal\_id)
+### <a name="input_container_compute_identity_principal_id"></a> [container_compute_identity_principal_id](#input_container_compute_identity_principal_id)
 
 Description: The principal id of the managed identity used by the container compute to pull images from the container registry
 
 Type: `string`
 
-### <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry)
+### <a name="input_enable_telemetry"></a> [enable_telemetry](#input_enable_telemetry)
 
 Description: Whether to enable telemetry for the container registry
 
 Type: `bool`
 
-### <a name="input_location"></a> [location](#input\_location)
+### <a name="input_location"></a> [location](#input_location)
 
 Description: Azure region where the resource should be deployed.
 
 Type: `string`
 
-### <a name="input_name"></a> [name](#input\_name)
+### <a name="input_name"></a> [name](#input_name)
 
 Description: The name of the container registry
 
 Type: `string`
 
-### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
+### <a name="input_resource_group_name"></a> [resource_group_name](#input_resource_group_name)
 
 Description: The name of the resource group in which to create the container registry
 
 Type: `string`
 
-### <a name="input_use_private_networking"></a> [use\_private\_networking](#input\_use\_private\_networking)
+### <a name="input_use_private_networking"></a> [use_private_networking](#input_use_private_networking)
 
 Description: Whether to use private networking for the container registry
 
@@ -147,7 +169,7 @@ Type: `bool`
 
 The following input variables are optional (have default values):
 
-### <a name="input_images"></a> [images](#input\_images)
+### <a name="input_images"></a> [images](#input_images)
 
 Description: A map of objects that define the images to build in the container registry. The key of the map is the name of the image and the value is an object with the following attributes:
 
@@ -171,7 +193,7 @@ map(object({
 
 Default: `{}`
 
-### <a name="input_private_dns_zone_id"></a> [private\_dns\_zone\_id](#input\_private\_dns\_zone\_id)
+### <a name="input_private_dns_zone_id"></a> [private_dns_zone_id](#input_private_dns_zone_id)
 
 Description: The id of the private DNS zone to create for the container registry. Only required if `container_registry_private_dns_zone_creation_enabled` is `false` and you are not using policy to update the DNS zone.
 
@@ -179,7 +201,7 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id)
+### <a name="input_subnet_id"></a> [subnet_id](#input_subnet_id)
 
 Description: The id of the subnet to use for the private endpoint
 
@@ -187,7 +209,7 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_tags"></a> [tags](#input\_tags)
+### <a name="input_tags"></a> [tags](#input_tags)
 
 Description: (Optional) Tags of the resource.
 
@@ -199,15 +221,15 @@ Default: `null`
 
 The following outputs are exported:
 
-### <a name="output_login_server"></a> [login\_server](#output\_login\_server)
+### <a name="output_login_server"></a> [login_server](#output_login_server)
 
 Description: The login server of the container registry
 
-### <a name="output_name"></a> [name](#output\_name)
+### <a name="output_name"></a> [name](#output_name)
 
 Description: The name of the container registry
 
-### <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id)
+### <a name="output_resource_id"></a> [resource_id](#output_resource_id)
 
 Description: The ID of the container registry
 
@@ -215,14 +237,16 @@ Description: The ID of the container registry
 
 The following Modules are called:
 
-### <a name="module_container_registry"></a> [container\_registry](#module\_container\_registry)
+### <a name="module_container_registry"></a> [container_registry](#module_container_registry)
 
 Source: Azure/avm-res-containerregistry-registry/azurerm
 
 Version: 0.4.0
 
 <!-- markdownlint-disable-next-line MD041 -->
+
 ## Data Collection
 
 The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement. Our privacy statement is located at <https://go.microsoft.com/fwlink/?LinkID=824704>. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
+
 <!-- END_TF_DOCS -->
